@@ -19,11 +19,17 @@ app.post("/api/send/email", (req, res) => {
   // If no error, then good to go...
   params = { "cle_api": req.body.cle_api, "sujet": "pas glop", "msg": "mon superbe message" }
   //console.log(params);
-  sendemail.ApiSendEmail(params.cle_api, (z)=> {
-    console.log(z)
-    res.send(z)
-  })
+  sendemail.ApiSendEmail(params.cle_api)
+    .then((z) => {
+      console.log(z)
+      res.send(z)
+    })
+    .catch((y) => {
+      console.log(y)
+      res.send(y)
+    })
 });
+
 
 
 

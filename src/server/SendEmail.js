@@ -22,30 +22,27 @@ validateSms = function (sms) {
 
 
 
-module.exports.ApiSendEmail = function (req, res) {
-    /*     const {
-            error
-        } = validateSms(req.body);
-        if (error) return res.status(400).send(error.details[0].message); 
-    */
-    obj = { "status": 0, "msg": "" }
-
-
-    console.log("phase:" + req)
-    Verif.VerifKey(req, function ttt(rrr) {
-        if (rrr !== "") {
-            console.log(rrr)
-            obj.status = 0;
-            obj.msg = rrr
-            res(obj)
-        } else {
-            //res.status(404).send('{"Error":"ApiKey not found"}');
-            obj.status = 1;
-            obj.msg = "ApiKey not found"
-            res(obj)
-        }
+module.exports.ApiSendEmail = function (dat) {
+    return new Promise(function (resolve, reject) {
+        /*     const {
+        error
+    } = validateSms(req.body);
+    if (error) return res.status(400).send(error.details[0].message); 
+*/
+        obj = { "status": 0, "msg": "" }
+        Verif.VerifKey(dat)
+            .then(function (a) {
+                obj.status = 0;
+                obj.msg = "Api Key ok"
+                console.log(obj)
+                resolve(obj)
+            })
+            .catch(function (b) {
+                obj.status = 1;
+                obj.msg = "Api Key nok"
+                console.log(obj)
+                reject(obj)
+            })
     })
-
-
 
 }
